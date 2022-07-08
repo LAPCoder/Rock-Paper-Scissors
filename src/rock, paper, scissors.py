@@ -1,17 +1,17 @@
-# a game of rock, paper, scissors
-# the computer will randomly choose rock, paper, or scissors
-# the player will then choose rock, paper, or scissors
-# the winner is determined by the rules of rock, paper, scissors
-# rock beats scissors
-# paper beats rock
-# scissors beats paper
-# if the player and the computer choose the same thing, it's a tie
-# if the player beats the computer, they win
-# if the computer beats the player, the computer wins
-# if someone wins, the game will restart
-# the game work in the loop until the player or the computer wins 3 times 
-# if the player or the computer wins 3 times, the game will end
-# if the player play always the same thing, computer will play to beat the player
+# A game of rock, paper, scissors
+# The computer will randomly choose rock, paper, or scissors
+# The player will then choose rock, paper, or scissors
+# The winner is determined by the rules of rock, paper, scissors
+# Rock beats scissors
+# Paper beats rock
+# Scissors beats paper
+# If the player and the computer choose the same thing, it's a tie
+# If the player beats the computer, they win
+# If the computer beats the player, the computer wins
+# If someone wins, the game will restart
+# The game work in the loop until the player or the computer wins 3 times 
+# If the player or the computer wins 3 times, the game will end
+# If the player play always the same thing, computer will play to beat the player
 
 import random
 
@@ -54,43 +54,63 @@ def get_best_move() -> str:
 	global player_choices
 	global computer_random_move
 
-	player_choices_temp = player_choices
+	player_choices_temp5 = player_choices
+	player_choices_temp3 = player_choices
 
 	# player_choices is limited to 5
 
-	while len(player_choices_temp) > 5:
-		player_choices_temp.pop(0)
+	while len(player_choices_temp5) > 5:
+		player_choices_temp5.pop(0)
+
+	# player_choices is limited to 3
+
+	while len(player_choices_temp3) > 3:
+		player_choices_temp3.pop(0)
 
 	# check 5 least used moves (player_choices)
 	# if 3/5 moves are same, computer will beat the player
-
-	if len(player_choices_temp) >= 5:
-		if player_choices_temp.count("r") >= 3: # like [r, r, r, p, p] => computer plays p
+	if len(player_choices_temp5) >= 5:
+		if player_choices_temp5.count("r") >= 3: # like [r, r, r, p, p] => computer plays p
 			computer_random_move += [False]
 			return "p"
-		elif player_choices_temp.count("p") >= 3: # like [r, p, r, p, p] => computer plays s
+		elif player_choices_temp5.count("p") >= 3: # like [r, p, r, p, p] => computer plays s
 			computer_random_move += [False]
 			return "s"
-		elif player_choices_temp.count("s") >= 3: # like [r, s, s, p, s] => computer plays r
+		elif player_choices_temp5.count("s") >= 3: # like [r, s, s, p, s] => computer plays r
 			computer_random_move += [False]
 			return "r"
 		else:
 			computer_random_move += [None]
 			lst = ["", ""]
 			lstIndex = 0
-			if player_choices_temp.count("r") >= 2:
+			if player_choices_temp5.count("r") >= 2:
 				lst[lstIndex] = "r"
 				lstIndex += 1
-			if player_choices_temp.count("p") >= 2:
+			if player_choices_temp5.count("p") >= 2:
 				lst[lstIndex] = "p"
 				lstIndex += 1
-			if player_choices_temp.count("s") >= 2:
+			if player_choices_temp5.count("s") >= 2:
 				lst[lstIndex] = "s"
 				lstIndex += 1
 			if lstIndex > 2:
 				print("Error: in get_best_move(), after the while loop, lstIndex is greater than 1.")
 				print("Please report this bug to the developer. (https://github.com/LAPCoder/Rock-Paper-Scissors)")
 			return random.choice(lst)
+
+	# check 3 least used moves (player_choices)
+	# if they are different, the user play the first one.
+	# the function return the choice to beat this move
+
+	elif len(player_choices) >= 3 and player_choices_temp3[0] != player_choices_temp3[1] and player_choices_temp3[0] != player_choices_temp3[2] and player_choices_temp3[1] != player_choices_temp3[2]:
+		if player_choices_temp3[0] == "r":
+			computer_random_move += [False]
+			return "p"
+		elif player_choices_temp3[0] == "p":
+			computer_random_move += [False]
+			return "s"
+		elif player_choices_temp3[0] == "s":
+			computer_random_move += [False]
+			return "r"
 
 	else:
 
@@ -123,14 +143,14 @@ def get_best_move() -> str:
 
 def get_game_part() -> str:
 	# When the game ends and the player win,
-	# the game will ask if the player want to get
-	# the game part (all choices of the player and the computer)
-	# example: [[r, p, false], [p, s, none], [r, s, true]]
+	# The game will ask if the player want to get
+	# The game part (all choices of the player and the computer)
+	# Example: [[r, p, false], [p, s, none], [r, s, true]]
 	#            *  *  ~~~~~
 	#            |  |  |
-	#            |  |  computer play a random move? none: beetween two moves
-	#            |  computer choice
-	#            player choice
+	#            |  |  Computer play a random move? none: beetween two moves
+	#            |  Computer choice
+	#            Player choice
 
 	global player_choices
 	global computer_choices
@@ -154,29 +174,29 @@ def loop() -> None:
 	global player_choices
 	global computer_choices
 
-	# check if player wins
+	# Check if player wins
 	if win_number >= 3:
 		print("You win!")
-		if input("\nDo you want to get the game data? (y/n)\n\n\
+		if input("\nDo you want to get the game id? (y/n)\n\n\
 It's useful to know the history of the game, because you can help me to improve the game.\n\n\
-To get the game data and help me to improve the game, you have to type 'y' and press enter.\n\
-After that, you will get the game data.\n\
-You can go on GitHub (https://github.com/LAPCoder/Rock-Paper-Scissors) and post your game data.\n\n\
-If you don't want to get the game data, you have to type 'n' and press enter. => ").lower() == "y":
+To get the game part and help me to improve the game, you have to type 'y' and press enter.\n\
+After that, you will get the game part.\n\
+You can go on GitHub (https://github.com/LAPCoder/Rock-Paper-Scissors), go on issues and post your game id.\n\n\
+If you don't want to get the game part, you have to type 'n' and press enter. => ").lower() == "y":
 			print("Game part:")
 			print(get_game_part())
 			print("Thank you for your help!")
 		return
 	
-	# check if computer wins
+	# Check if computer wins
 	if defeat_number >= 3:
 		print("You lose!")
 		return
 
-	# computer input
+	# Computer input
 	computer_choice = get_best_move()
 
-	# player input
+	# Player input
 	player_choice = input("\nRock, paper, or scissors? (r/p/s) ").lower()
 	if player_choice == "r":
 		rock_number += 1
@@ -191,18 +211,18 @@ If you don't want to get the game data, you have to type 'n' and press enter. =>
 	player_choices += [player_choice]
 	computer_choices += [computer_choice]
 	
-	# print computer choice
+	# Print computer choice
 	try:
 		print("\nComputer chooses " + computer_choice)
 	except TypeError:
-		print("\nWe found a bug! Please report it on GitHub (https://github.com/LAPCoder/Rock-Paper-Scissors).\nError: TypeError\n")
+		print("\nWe found a bug! Please report it on GitHub (https://github.com/LAPCoder/Rock-Paper-Scissors).\nError: TypeError line 218\n")
 		print("Game part:", get_game_part())
 		return
 	except:
 		print("\nWe found a bug! Please report it on GitHub (https://github.com/LAPCoder/Rock-Paper-Scissors).\nError: Unknown\n")
 		print("Game part:", get_game_part())
 
-	# compare input
+	# Compare input
 	if player_choice == computer_choice:
 		print("Tie!")
 		loop()
@@ -236,5 +256,8 @@ If you don't want to get the game data, you have to type 'n' and press enter. =>
 
 if __name__ == "__main__":
 	print("\033[3J\033[2J\033[HWelcome to Rock, paper, scissors!")
-	loop()
+	try:
+		loop()
+	except KeyboardInterrupt:
+		print("\n\nYou have quit the game.")
 	print("\nThanks for playing!")
